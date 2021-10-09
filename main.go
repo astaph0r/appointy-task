@@ -187,10 +187,9 @@ func getUser(res http.ResponseWriter, req *http.Request) {
 
 func getPostsByUser(res http.ResponseWriter, req *http.Request) {
 	userId := req.URL.Path[len("/posts/users/"):]
-	objectId, err := primitive.ObjectIDFromHex(userId)
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
-	cursor, err := postCollection.Find(ctx, bson.M{"postedBy": objectId})
+	cursor, err := postCollection.Find(ctx, bson.M{"postedBy": userId})
 	if err != nil {
 		log.Fatal(err)
 	}
